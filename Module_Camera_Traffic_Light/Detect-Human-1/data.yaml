@@ -1,0 +1,12 @@
+names:
+- person
+nc: 1
+roboflow:
+  license: CC BY 4.0
+  project: detect-human-ywhbp
+  url: https://universe.roboflow.com/object-detection-zebra-crossing/detect-human-ywhbp/dataset/1
+  version: 1
+  workspace: object-detection-zebra-crossing
+test: ../test/images
+train: Detect-Human-1/train/images
+val: Detect-Human-1/valid/images
