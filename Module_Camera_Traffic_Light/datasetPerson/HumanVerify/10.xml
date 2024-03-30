@@ -1,0 +1,26 @@
+<annotation>
+	<folder>1_aHuman</folder>
+	<filename>10.png</filename>
+	<path>C:\Users\dolla\OneDrive\Desktop\ourResearch\Module_Camera_Traffic_Light\datasetPerson\1_aHuman\10.png</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>480</width>
+		<height>471</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>person</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>240</xmin>
+			<ymin>206</ymin>
+			<xmax>404</xmax>
+			<ymax>422</ymax>
+		</bndbox>
+	</object>
+</annotation>
