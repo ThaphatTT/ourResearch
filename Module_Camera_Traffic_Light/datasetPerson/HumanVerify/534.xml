@@ -1,0 +1,26 @@
+<annotation>
+	<folder>1_aHuman</folder>
+	<filename>534.png</filename>
+	<path>/Volumes/External/Mac/Learning/ourResearch/Module_Camera_Traffic_Light/datasetPerson/1_aHuman/534.png</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>681</width>
+		<height>625</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>person</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>225</xmin>
+			<ymin>6</ymin>
+			<xmax>390</xmax>
+			<ymax>370</ymax>
+		</bndbox>
+	</object>
+</annotation>
