@@ -30,6 +30,7 @@ from utils import visualize
 COUNTER, FPS = 0, 0
 START_TIME = time.time()
 global detecting
+path = "C:/Users/Dollars/Desktop/ourResearch/Module_Camera_Traffic_Light/"
 sound_files = ["StopWaitingEng.mp3", "PrepareToCrossEng.mp3", "CanCrossTheRoadEng.mp3" ]
 global count_detect_object
 def run(model: str, max_results: int, score_threshold: float, 
@@ -72,8 +73,6 @@ def run(model: str, max_results: int, score_threshold: float,
   detection_frame = None
   detection_result_list = []
 
-
-  
   pygame.init()
 
   def save_result(result: vision.ObjectDetectorResult, unused_output_image: mp.Image, timestamp_ms: int):
@@ -155,14 +154,14 @@ def run(model: str, max_results: int, score_threshold: float,
                 print(f"start_time after play sound stop waiting: {start_time}")
                 print(f"detecting after play sound stop waiting : {detecting}")
                 print(f"status Sound playing after play sound stop waiting: {sound_playing}")
-            elif time.time() - start_time >= 6 and detecting and not sound_prepare :
+            elif time.time() - start_time >= 4 and detecting and not sound_prepare :
                 playSoundPrepareToCross()
                 start_time = None
                 sound_prepare = True
                 print(f"start_time after play sound prepare the cross: {start_time}")
                 print(f"detecting after play sound prepare the cross : {detecting}")
                 print(f"status Sound playing after play sound prepare the cross: {sound_playing}")
-            elif time.time() - start_time >= 10 and detecting and not sound_cancross:
+            elif time.time() - start_time >= 8 and detecting and not sound_cancross:
                 playSoundCanCrossTheRoad()
                 start_time = None
                 detecting = False
@@ -171,6 +170,7 @@ def run(model: str, max_results: int, score_threshold: float,
                 print(f"detecting after play sound prepare the cross : {detecting}")
                 print(f"status Sound playing after play sound prepare the cross: {sound_playing}")
         else:
+            pygame.mixer.music.pause()
             start_time = None
             detecting = False
             sound_playing = False
@@ -207,7 +207,7 @@ def main():
       help='Path of the object detection model.',
       required=False,
 #      default='efficientdet_lite0.tflite')
-      default='best.tflite')
+      default='C:/Users/Dollars/Desktop/ourResearch/Module_Camera_Traffic_Light/best.tflite')
   parser.add_argument(
       '--maxResults',
       help='Max number of detection results.',
@@ -218,7 +218,7 @@ def main():
       help='The score threshold of detection results.',
       required=False,
       type=float,
-      default=0.4)
+      default=0.6)
   # Finding the camera ID can be very reliant on platform-dependent methods. 
   # One common approach is to use the fact that camera IDs are usually indexed sequentially by the OS, starting from 0. 
   # Here, we use OpenCV and create a VideoCapture object for each potential ID with 'cap = cv2.VideoCapture(i)'.
@@ -247,9 +247,12 @@ def main():
 def play_sound(file):
     global sound_playing
     if not pygame.mixer.music.get_busy():
-        pygame.mixer.music.load(file)
-        pygame.mixer.music.play()
-        sound_playing = True
+        pygame.mixer.music.stop() 
+    pygame.mixer.music.load(path + file)
+    pygame.mixer.music.play(-1)
+
+   
+    sound_playing = True
 
 def playSoundStopWaiting():
     threading.Thread(target=play_sound, args=(sound_files[0],)).start()
