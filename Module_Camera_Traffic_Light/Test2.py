@@ -244,27 +244,55 @@ def main():
   
         
 
-def play_sound(file):
+def play_soundStop(file):
     global sound_playing
-    while True:
-        if not pygame.mixer.music.get_busy():
-            pygame.mixer.music.stop() 
-        pygame.mixer.music.load(path + file)
-        pygame.mixer.music.play()
-        while pygame.mixer.music.get_busy(): 
-            # Check if the music is playing.
-            time.sleep(1) 
-        time.sleep(1) # Wait for 1 second before the next loop.
-        sound_playing = True
+    if not pygame.mixer.music.get_busy():
+        pygame.mixer.music.stop() 
+    pygame.mixer.music.load(path + file)
+    pygame.mixer.music.play()
+    time.sleep(2)  
+    pygame.mixer.music.play()
+
+    sound_playing = True
+
+def play_soundPrepare(file):
+    global sound_playing
+    if not pygame.mixer.music.get_busy():
+        pygame.mixer.music.stop() 
+    pygame.mixer.music.load(path + file)
+    pygame.mixer.music.play()
+    time.sleep(2)  
+    pygame.mixer.music.play()
+    time.sleep(2)  
+    pygame.mixer.music.play()
+    time.sleep(2)  
+    pygame.mixer.music.play()
+
+    sound_playing = True
+
+def play_soundCan(file):
+    global sound_playing
+    if not pygame.mixer.music.get_busy():
+        pygame.mixer.music.stop() 
+    pygame.mixer.music.load(path + file)
+    pygame.mixer.music.play()
+    time.sleep(2)  
+    pygame.mixer.music.play()
+    time.sleep(2)  
+    pygame.mixer.music.play()
+    time.sleep(2)  
+    pygame.mixer.music.play()
+
+    sound_playing = True
 
 def playSoundStopWaiting():
-    threading.Thread(target=play_sound, args=(sound_files[0],)).start()
+    threading.Thread(target=play_soundStop, args=(sound_files[0],)).start()
 
 def playSoundPrepareToCross():
-    threading.Thread(target=play_sound, args=(sound_files[1],)).start()
+    threading.Thread(target=play_soundPrepare, args=(sound_files[1],)).start()
 
 def playSoundCanCrossTheRoad():
-    threading.Thread(target=play_sound, args=(sound_files[2],)).start()
+    threading.Thread(target=play_soundCan, args=(sound_files[2],)).start()
 
 if __name__ == '__main__':
   main()
