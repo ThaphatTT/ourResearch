@@ -73,6 +73,15 @@ def run(model: str, max_results: int, score_threshold: float,
   detection_frame = None
   detection_result_list = []
 
+  rect_width = 200
+  rect_height = 480
+
+  # คำนวณจุดเริ่มต้นและจุดสิ้นสุดให้ rectangle อยู่ตรงกลาง
+  start_x = (width - rect_width) // 2
+  start_y = (height - rect_height) // 2
+  end_x = start_x + rect_width
+  end_y = start_y + rect_height
+
   pygame.init()
 
   def save_result(result: vision.ObjectDetectorResult, unused_output_image: mp.Image, timestamp_ms: int):
@@ -115,10 +124,12 @@ def run(model: str, max_results: int, score_threshold: float,
     image = cv2.flip(image, 1)
 
     # Define the region of interest (ROI) - the right half of the image
-    roi = image[:, image.shape[1]//2:]
+    # roi = image[:, image.shape[1]//2:]
+    roi = image[start_y:end_y, start_x:end_x]
 
     # Draw a green rectangle around the ROI on the original image
-    cv2.rectangle(image, (image.shape[1]//2, 0), (image.shape[1], image.shape[0]), (0, 255, 0), 2)
+    # cv2.rectangle(image, (image.shape[1]//2, 0), (image.shape[1], image.shape[0]), (0, 255, 0), 2)
+    cv2.rectangle(image, (start_x, start_y), (end_x, end_y), (0, 255, 0), 2)
 
     if frame_count % detect_every_n_frames == 0:
     # Convert the ROI from BGR to RGB as required by the TFLite model.
@@ -178,7 +189,7 @@ def run(model: str, max_results: int, score_threshold: float,
             sound_cancross = False
             print(f"start_time: {start_time}")
             print(f"detecting: {detecting}")
-        current_frame[:, current_frame.shape[1]//2:] = roi
+        current_frame[start_y:end_y, start_x:end_x] = roi
         detection_frame = current_frame
         detection_result_list.clear()
        
