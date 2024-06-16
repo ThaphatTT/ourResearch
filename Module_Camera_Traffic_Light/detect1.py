@@ -24,9 +24,9 @@ path = "/home/admin/Desktop/ourResearch/Module_Camera_Traffic_Light/"
 sound_files = ["StopWaiting.mp3", "PrepareToCross.mp3", "CanCrossTheRoad.mp3"]
 global count_detect_object
 
-green = LED(18)
-yellow = LED(23)
-red = LED(27)
+green = LED(17)
+yellow = LED(27)
+red = LED(18)
 
 picam2 = Picamera2()
 picam2.preview_configuration.main.size = (2304,1296)
@@ -63,6 +63,14 @@ def run(model: str, max_results: int, score_threshold: float,
 
   detection_frame = None
   detection_result_list = []
+  rect_width = 200
+  rect_height = 480
+
+  # คำนวณจุดเริ่มต้นและจุดสิ้นสุดให้ rectangle อยู่ตรงกลาง
+  start_x = (width - rect_width) // 2
+  start_y = (height - rect_height) // 2
+  end_x = start_x + rect_width
+  end_y = start_y + rect_height
   pygame.init()
 
   def save_result(result: vision.ObjectDetectorResult, unused_output_image: mp.Image, timestamp_ms: int):
@@ -94,9 +102,11 @@ def run(model: str, max_results: int, score_threshold: float,
     image=cv2.resize(im,(640,480)) 
     image = cv2.flip(image, 1)
     
-    roi = image[:, image.shape[1]//2:]
+    # roi = image[:, image.shape[1]//2:]
+    roi = image[start_y:end_y, start_x:end_x]
     
-    cv2.rectangle(image, (image.shape[1]//2, 0), (image.shape[1], image.shape[0]), (0, 255, 0), 2)
+    # cv2.rectangle(image, (image.shape[1]//2, 0), (image.shape[1], image.shape[0]), (0, 255, 0), 2)
+    cv2.rectangle(image, (start_x, start_y), (end_x, end_y), (0, 255, 0), 2)
     
     # Convert the image from BGR to RGB as required by the TFLite model.
     if frame_count % detect_every_n_frames == 0:
@@ -154,7 +164,8 @@ def run(model: str, max_results: int, score_threshold: float,
             sound_cancross = False
             print(f"start_time: {start_time}")
             print(f"detecting: {detecting}")
-        current_frame[:, current_frame.shape[1]//2:] = roi
+        # current_frame[:, current_frame.shape[1]//2:] = roi
+        current_frame[start_y:end_y, start_x:end_x] = roi
         detection_frame = current_frame
         detection_result_list.clear()
 
