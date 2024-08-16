@@ -1,5 +1,5 @@
 # ourResearch
-This is a our research and The Research about Smart Camera Traffic light in the crossing
+This is a our research and The Research about Smart Traffic light for crossing walk
 We expect to this research helpful the user use the crossing
 
 # Another
